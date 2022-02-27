@@ -1,0 +1,19 @@
+import java.util.concurrent.*;
+
+public class Program {
+    public static void main (String args []) throws InterruptedException, ExecutionException {
+        ExecutorService pool = Executors.newFixedThreadPool(5);// 5 рабочих
+        //        ExecutorService pool = Executors.newSingleThreadExecutor(); 1 рабочий
+        //        ExecutorService pool = Executors.newCachedThreadPool(); n рабочий, исчезает после 60 секунд
+
+        Future [] tasks = new Future[10];
+        for (int i = 0; i < 10; i++)
+            tasks[i] = pool.submit(new MyCallTask());
+
+        for (Future<?> t: tasks)
+            System.out.println(t.get());
+
+
+        pool.shutdown();
+    }
+}
