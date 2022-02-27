@@ -1,9 +1,11 @@
 import java.util.function.DoubleFunction;
+import java.util.concurrent.*;
 
 public class Integrals {
     public static final int STEPS = 10000000;
-    
-    public static double singleThread(DoubleFunction <Double> f, double a, double b) {
+    public static final int TASKS = 10;
+
+    public static double singleThread(DoubleFunction <Double> f, double a, double b){
 
         return singleThread(f, a, b, STEPS);
     }
@@ -16,6 +18,25 @@ public class Integrals {
             double y = f.apply(x);
             summa += y * h;
         }
+        return summa;
+    }
+
+    public static double multiThread(DoubleFunction <Double> f, double a, double b) throws InterruptedException, ExecutionException {
+        ExecutorService pool = Executors.newFixedThreadPool(TASKS);
+
+        double hx = (b-a) / TASKS;
+        Future <Double> [] tasks = new Future[TASKS];
+        for (int i = 0; i < TASKS; i++){
+            final double ax = a + i * hx;
+            final double bx = ax + hx;
+            tasks [i] = pool.submit( () -> Integrals.singleThread(f, ax, bx, STEPS/TASKS));
+        }
+        double summa = 0d;
+        for(Future <Double> t : tasks)
+            summa += t.get();
+
+        pool.shutdown();
+
         return summa;
     }
 
