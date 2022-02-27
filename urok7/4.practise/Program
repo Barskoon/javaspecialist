@@ -1,6 +1,23 @@
+import java.util.concurrent.ExecutionException;
+
 public class Program {
-    public static void main (String args []){
+    public static void main (String args []) throws InterruptedException, ExecutionException {
+        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+
+        long t1 = System.currentTimeMillis();
         double r1 = Integrals.singleThread(Math::sin, 0d, Math.PI/2);
-        System.out.println(r1);
+        long t2 = System.currentTimeMillis();
+
+        System.out.printf("Single thread: %f Time: %d\n", r1, t2 - t1);
+
+        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+
+        long t3 = System.currentTimeMillis();
+        double r2 = Integrals.multiThread(Math::sin, 0d, Math.PI/2);
+        long t4 = System.currentTimeMillis();
+
+        System.out.printf("Multi thread: %f Time: %d\n", r2, t4 - t3);
     }
 }
