@@ -1,0 +1,6 @@
+public class Program {
+    public static void main (String args []){
+        double r1 = Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+        System.out.println(r1);
+    }
+}
