@@ -5,6 +5,7 @@ public class Program {
         ExecutorService pool = Executors.newFixedThreadPool(5);// 5 рабочих
         //        ExecutorService pool = Executors.newSingleThreadExecutor(); 1 рабочий
         //        ExecutorService pool = Executors.newCachedThreadPool(); n рабочий, исчезает после 60 секунд
+        //        ExecutorService pool = Executors.newWorkStealingPool(Runtime.getRuntime().availableProcessors()); 
 
         Future [] tasks = new Future[10];
         for (int i = 0; i < 10; i++)
