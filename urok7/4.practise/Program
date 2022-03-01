@@ -11,13 +11,22 @@ public class Program {
 
         System.out.printf("Single thread: %f Time: %d\n", r1, t2 - t1);
 
-        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
-        Integrals.singleThread(Math::sin, 0d, Math.PI/2);
+        Integrals.multiThread(Math::sin, 0d, Math.PI/2);
+        Integrals.multiThread(Math::sin, 0d, Math.PI/2);
 
         long t3 = System.currentTimeMillis();
         double r2 = Integrals.multiThread(Math::sin, 0d, Math.PI/2);
         long t4 = System.currentTimeMillis();
 
         System.out.printf("Multi thread: %f Time: %d\n", r2, t4 - t3);
+
+        Integrals.multiThread2(Math::sin, 0d, Math.PI/2);
+        Integrals.multiThread2(Math::sin, 0d, Math.PI/2);
+
+        long t5 = System.currentTimeMillis();
+        double r3 = Integrals.multiThread2(Math::sin, 0d, Math.PI/2);
+        long t6 = System.currentTimeMillis();
+
+        System.out.printf("Multi 2 thread: %f Time: %d\n", r3, t6 - t5);
     }
 }
